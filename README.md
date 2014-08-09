@@ -5,6 +5,6 @@ Under development...
 ## How to use
 
 ```
-$ go get github.com/yurufuwa/tools
+$ go get github.com/yurufuwa/yurufuwa
 $ yurufuwa
 ```
