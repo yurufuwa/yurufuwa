@@ -2,21 +2,36 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/google/go-github/github"
 	"github.com/yurufuwa/yurufuwa/client"
+	"github.com/yurufuwa/yurufuwa/commands"
 )
 
+// Command のインターフェイス
+type Command interface {
+	Name() string
+	Run(*github.Client)
+}
+
 func main() {
-	client := client.CreateClient()
+	commands := []Command{&commands.Members{}}
 
-	members, _, err := client.Organizations.ListMembers("yurufuwa", &github.ListMembersOptions{})
-
-	if err != nil {
-		fmt.Println(err)
+	args := os.Args
+	if len(args) < 2 {
+		fmt.Println("サブコマンドを指定してください: member")
+		os.Exit(1)
 	}
 
-	for index := range members {
-		fmt.Println(*members[index].Login)
+	for _, cmd := range commands {
+		if cmd.Name() == args[1] {
+			client := client.CreateClient()
+			cmd.Run(client)
+			os.Exit(0)
+		}
 	}
+
+	fmt.Printf("%s サブコマンドは存在しません\n", args[1])
+	os.Exit(1)
 }
