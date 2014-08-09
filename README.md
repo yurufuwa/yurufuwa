@@ -6,5 +6,5 @@ Under development...
 
 ```
 $ go get github.com/yurufuwa/yurufuwa
-$ yurufuwa
+$ yurufuwa members
 ```
