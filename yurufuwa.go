@@ -20,7 +20,8 @@ func main() {
 
 	args := os.Args
 	if len(args) < 2 {
-		fmt.Println("サブコマンドを指定してください: member")
+		fmt.Println("サブコマンドを指定してください")
+		fmt.Println("\t: members")
 		os.Exit(1)
 	}
 
