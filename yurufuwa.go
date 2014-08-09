@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/google/go-github/github"
-	"github.com/yurufuwa/tools/client"
+	"github.com/yurufuwa/yurufuwa/client"
 )
 
 func main() {
