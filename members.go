@@ -20,14 +20,21 @@ func MembersCommand() *cli.Command {
 }
 
 func listMembers(client *github.Client) {
+	members := FetchMembers(client)
+
+	for index := range members {
+		member := members[index]
+		fmt.Println(*member.Login)
+	}
+}
+
+// FetchMembers returns Yurufuwa members as array of github.User
+func FetchMembers(client *github.Client) []github.User {
 	members, _, err := client.Organizations.ListMembers("yurufuwa", &github.ListMembersOptions{})
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	for index := range members {
-		member := members[index]
-		fmt.Println(*member.Login)
-	}
+	return members
 }
