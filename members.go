@@ -14,20 +14,31 @@ func MembersCommand() *cli.Command {
 		Usage: "Show yurufuwa members.",
 		Action: func(c *cli.Context) {
 			client := CreateClient()
-			listMembers(client)
+			err := listMembers(client)
+			if err != nil {
+				fmt.Println(err)
+			}
 		},
 	}
 }
 
-func listMembers(client *github.Client) {
-	members, _, err := client.Organizations.ListMembers("yurufuwa", &github.ListMembersOptions{})
+func listMembers(client *github.Client) error {
+	members, err := FetchMembers(client)
 
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 
 	for index := range members {
 		member := members[index]
 		fmt.Println(*member.Login)
 	}
+	return nil
+}
+
+// FetchMembers returns Yurufuwa members as array of github.User
+func FetchMembers(client *github.Client) ([]github.User, error) {
+	members, _, err := client.Organizations.ListMembers("yurufuwa", &github.ListMembersOptions{})
+
+	return members, err
 }
