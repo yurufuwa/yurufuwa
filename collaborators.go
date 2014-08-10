@@ -34,10 +34,15 @@ func CollaboratorsCommand() *cli.Command {
 						os.Exit(1)
 					}
 
-					err = addCollaborators(client, owner, repos)
+					addedMembers, err := addCollaborators(client, owner, repos)
 					if err != nil {
 						fmt.Println(err)
 						os.Exit(1)
+					}
+
+					fmt.Printf("These members have been added to %s/%s!!\n", owner, repos)
+					for _, member := range addedMembers {
+						fmt.Printf(" - %s\n", *member.Login)
 					}
 				},
 			},
@@ -52,10 +57,15 @@ func CollaboratorsCommand() *cli.Command {
 						os.Exit(1)
 					}
 
-					err = removeCollaborators(client, owner, repos)
+					removedMembers, err := removeCollaborators(client, owner, repos)
 					if err != nil {
 						fmt.Println(err)
 						os.Exit(1)
+					}
+
+					fmt.Printf("These members have been removed from %s/%s!!\n", owner, repos)
+					for _, member := range removedMembers {
+						fmt.Printf(" - %s\n", *member.Login)
 					}
 				},
 			},
@@ -76,28 +86,34 @@ func extractReposName(args cli.Args) (string, string, error) {
 	return org, name, nil
 }
 
-func addCollaborators(client *github.Client, owner, repos string) error {
+func addCollaborators(client *github.Client, owner, repos string) ([]github.User, error) {
 	members, err := FetchMembers(client)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
+	var addedMembers []github.User
 	for _, user := range members {
-		client.Repositories.AddCollaborator(owner, repos, *user.Login)
-		fmt.Println(*user.Login + "has successfully added to your repository!!")
+		_, err := client.Repositories.AddCollaborator(owner, repos, *user.Login)
+		if err == nil {
+			addedMembers = append(addedMembers, user)
+		}
 	}
-	return nil
+	return addedMembers, nil
 }
 
-func removeCollaborators(client *github.Client, owner, repos string) error {
+func removeCollaborators(client *github.Client, owner, repos string) ([]github.User, error) {
 	members, err := FetchMembers(client)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
+	var removedMembers []github.User
 	for _, user := range members {
-		client.Repositories.RemoveCollaborator(owner, repos, *user.Login)
-		fmt.Println(*user.Login + "has successfully removed from your repository!!")
+		_, err := client.Repositories.RemoveCollaborator(owner, repos, *user.Login)
+		if err == nil {
+			removedMembers = append(removedMembers, user)
+		}
 	}
-	return nil
+	return removedMembers, nil
 }
