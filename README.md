@@ -7,5 +7,16 @@ Under development...
 ```
 $ go get github.com/yurufuwa/yurufuwa/cmd/yurufuwa
 $ yurufuwa -h
-$ yurufuwa members
+```
+
+### 自分のリポジトリにコラボレータとして Yurufuwa メンバーを追加
+
+```
+$ yurufuwa collaborators add your/repos
+```
+
+### 自分のリポジトリにコラボレータとして追加した Yurufuwa メンバーを削除
+
+```
+$ yurufuwa collaborators remove your/repos
 ```
