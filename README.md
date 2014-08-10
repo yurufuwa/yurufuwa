@@ -5,6 +5,7 @@ Under development...
 ## How to use
 
 ```
-$ go get github.com/yurufuwa/yurufuwa
+$ go get github.com/yurufuwa/yurufuwa/cmd/yurufuwa
+$ yurufuwa -h
 $ yurufuwa members
 ```
