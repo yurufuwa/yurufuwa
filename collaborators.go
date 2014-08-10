@@ -33,7 +33,12 @@ func CollaboratorsCommand() *cli.Command {
 						fmt.Println(err)
 						os.Exit(1)
 					}
-					addCollaborators(client, owner, repos)
+
+					err = addCollaborators(client, owner, repos)
+					if err != nil {
+						fmt.Println(err)
+						os.Exit(1)
+					}
 				},
 			},
 			{
@@ -44,8 +49,14 @@ func CollaboratorsCommand() *cli.Command {
 					owner, repos, err := extractReposName(c.Args())
 					if err != nil {
 						fmt.Println(err)
+						os.Exit(1)
 					}
-					removeCollaborators(client, owner, repos)
+
+					err = removeCollaborators(client, owner, repos)
+					if err != nil {
+						fmt.Println(err)
+						os.Exit(1)
+					}
 				},
 			},
 		},
@@ -65,18 +76,28 @@ func extractReposName(args cli.Args) (string, string, error) {
 	return org, name, nil
 }
 
-func addCollaborators(client *github.Client, owner, repos string) {
-	members := FetchMembers(client)
+func addCollaborators(client *github.Client, owner, repos string) error {
+	members, err := FetchMembers(client)
+	if err != nil {
+		return err
+	}
+
 	for _, user := range members {
 		client.Repositories.AddCollaborator(owner, repos, *user.Login)
 		fmt.Println(*user.Login + "has successfully added to your repository!!")
 	}
+	return nil
 }
 
-func removeCollaborators(client *github.Client, owner, repos string) {
-	members := FetchMembers(client)
+func removeCollaborators(client *github.Client, owner, repos string) error {
+	members, err := FetchMembers(client)
+	if err != nil {
+		return err
+	}
+
 	for _, user := range members {
 		client.Repositories.RemoveCollaborator(owner, repos, *user.Login)
 		fmt.Println(*user.Login + "has successfully removed from your repository!!")
 	}
+	return nil
 }
