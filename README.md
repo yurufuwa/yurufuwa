@@ -4,9 +4,19 @@ Under development...
 
 ## How to use
 
+### Install
+
 ```
 $ go get github.com/yurufuwa/yurufuwa/cmd/yurufuwa
 $ yurufuwa -h
+```
+
+You need to install golang. (e.g. `$ brew install go`)
+
+### Update
+
+```
+$ go get -u github.com/yurufuwa/yurufuwa/cmd/yurufuwa
 ```
 
 ### 自分のリポジトリにコラボレータとして Yurufuwa メンバーを追加
