@@ -20,3 +20,9 @@ $ yurufuwa collaborators add your/repos
 ```
 $ yurufuwa collaborators remove your/repos
 ```
+
+### 開催予定の meetup の情報を表示
+
+```
+$ yurufuwa meetups
+```
