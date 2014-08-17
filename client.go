@@ -7,5 +7,5 @@ import (
 
 // CreateClient は認証済みの github.Client を返します
 func CreateClient() *github.Client {
-	return client.CreateClient("yurufuwa")
+	return client.CreateClient("yurufuwa", []string{"repo", "public_repo", "read:org"})
 }
