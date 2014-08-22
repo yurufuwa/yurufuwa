@@ -36,3 +36,24 @@ $ yurufuwa collaborators remove your/repos
 ```
 $ yurufuwa meetups
 ```
+
+## How to develop
+
+### Check out and build
+
+```
+# recommend to use ghq!
+# or: git clone https://github.com/yurufuwa/yurufuwa.git
+ghq get yurufuwa/yurufuwa
+cd $( ghq list -p -e yurufuwa )
+
+# download dependencies
+go get
+
+# build binary
+go build -o $GOPATH/bin/yurufuwa ./cmd/yurufuwa
+```
+
+### Running tests
+
+* FIXME: Please add tests!!!
