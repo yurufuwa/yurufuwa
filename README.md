@@ -11,7 +11,7 @@ $ go get github.com/yurufuwa/yurufuwa/cmd/yurufuwa
 $ yurufuwa -h
 ```
 
-You need to install golang. (e.g. `$ brew install go`)
+You need to install golang and mercurial. (e.g. `$ brew install go` and `$ brew install mercurial`)
 
 ### Update
 
