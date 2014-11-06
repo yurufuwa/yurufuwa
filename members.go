@@ -38,7 +38,18 @@ func listMembers(client *github.Client) error {
 
 // FetchMembers returns Yurufuwa members as array of github.User
 func FetchMembers(client *github.Client) ([]github.User, error) {
-	members, _, err := client.Organizations.ListMembers("yurufuwa", &github.ListMembersOptions{})
+	opt := &github.ListMembersOptions{}
+	var allMembers []github.User
 
-	return members, err
+	for {
+		members, resp, err := client.Organizations.ListMembers("yurufuwa", opt)
+		if err != nil {
+			return nil, err
+		}
+		allMembers = append(allMembers, members...)
+		if resp.NextPage == 0 {
+			return allMembers, err
+		}
+		opt.ListOptions.Page = resp.NextPage
+	}
 }
