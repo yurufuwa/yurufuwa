@@ -11,7 +11,7 @@ $ go get github.com/yurufuwa/yurufuwa/cmd/yurufuwa
 $ yurufuwa -h
 ```
 
-You need to install golang. (e.g. `$ brew install go`)
+You need to install golang and mercurial. (e.g. `$ brew install go` and `$ brew install mercurial`)
 
 ### Update
 
@@ -36,3 +36,24 @@ $ yurufuwa collaborators remove your/repos
 ```
 $ yurufuwa meetups
 ```
+
+## How to develop
+
+### Check out and build
+
+```
+# recommend to use ghq!
+# or: git clone https://github.com/yurufuwa/yurufuwa.git
+ghq get yurufuwa/yurufuwa
+cd $( ghq list -p -e yurufuwa )
+
+# download dependencies
+go get
+
+# build binary
+go build -o $GOPATH/bin/yurufuwa ./cmd/yurufuwa
+```
+
+### Running tests
+
+* FIXME: Please add tests!!!
