@@ -48,7 +48,7 @@ func FetchMembers(client *github.Client) ([]github.User, error) {
 		}
 		allMembers = append(allMembers, members...)
 		if resp.NextPage == 0 {
-			return allMembers, err
+			return allMembers, nil
 		}
 		opt.ListOptions.Page = resp.NextPage
 	}
